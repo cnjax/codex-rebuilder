@@ -35,6 +35,18 @@ This script will:
 
 > **Note:** The script caches the extracted resources and downloaded Electron zip to speed up subsequent builds. Use `--clean` if you've updated `Codex.dmg` or the CLI to ensure stale files aren't reused.
 
+## GitHub Actions
+
+This repo now includes a manual workflow at `.github/workflows/rebuild-intel.yml`.
+
+Use it from the GitHub Actions tab:
+1.  Run **Rebuild Codex Intel App**.
+2.  Keep the default `codex_dmg_url` or point it at a different official `Codex.dmg`.
+3.  Leave `clean_build` enabled unless you intentionally want to reuse cached files during the job.
+4.  Download the uploaded `Codex_Intel.zip` artifact when the workflow finishes.
+
+The workflow runs on GitHub's Intel macOS runner, installs the latest `@openai/codex` CLI globally, executes `node rebuild_codex.js`, and uploads the rebuilt app as an artifact.
+
 ## How to Run
 
 Open the generated app:

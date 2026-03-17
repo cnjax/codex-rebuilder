@@ -325,8 +325,9 @@ exec "$DIR/Codex.orig" --no-sandbox "$@"
 
     // Dynamically find codex binary inside CLI path
     let sourceCodexBin = null;
+    const codexSearchCommand = `find "${CODEX_CLI_PATH}" -name codex -type f | grep "x86_64" | head -n 1`;
     try {
-        const findCodex = execSync(`find "${CODEX_CLI_PATH}" -name codex -type f | grep "x86_64" | head -n 1`, { encoding: 'utf8' }).trim();
+        const findCodex = execSync(codexSearchCommand, { encoding: 'utf8' }).trim();
         if (findCodex && fs.existsSync(findCodex)) {
             sourceCodexBin = findCodex;
         }
@@ -375,7 +376,7 @@ exec "$DIR/Codex.orig" --no-sandbox "$@"
         }
 
     } else {
-        console.warn(`WARNING: Could not find local x64 Codex binary. Checked: ${potentialCodexPaths.join(', ')}`);
+        console.warn(`WARNING: Could not find local x64 Codex binary. Search command: ${codexSearchCommand}`);
     }
 
     // 8. Fix Timestamps
